@@ -219,7 +219,7 @@ function canonicalize_file_url(url)
     m = match(blob_regex, url)
     if m !== nothing
         _, user, repo, ref, filepath = m.captures
-        if length(ref) != 40 || !all(c->isnumber(c) || c in 'a':'f' || c in 'A':'F', ref)
+        if length(ref) != 40 || !all(c->isnumeric(c) || c in 'a':'f' || c in 'A':'F', ref)
             # Ask github to resolve this ref for us
             ref = get(GitHub.reference(GitHub.Repo("$user/$repo"), "heads/$ref").object)["sha"]
         end
